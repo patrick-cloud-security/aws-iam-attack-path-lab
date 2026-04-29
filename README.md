@@ -10,7 +10,7 @@ This lab demonstrates real-world AWS cloud security attack paths and how to defe
 
 IAM user --> ssm:SendCommand --> EC2 executes command as root --> IMDS --> credential retrieval
 
-###2 2. PassRole Priviege Escalation
+### 2. PassRole Priviege Escalation
 
 IAM user --> iam:PassRole + ec2:RunInstances --> EC2 with admin role --> IMDS --> admin credentials 
 
