@@ -30,6 +30,15 @@ IAM user --> iam:PassRole + ec2:RunInstances --> EC2 with admin role --> IMDS --
 - Scope iam:PassRole
 - Separate dev and prod accounts
 
+## Architecture / Attack Flow
+
+![Attack Diagram](diagrams/vpc-attack-architecture.png)
+
+
+
+
 ## Status
 
 Work in progress. Expanding into IAM guardrails and Terraform-based security design.
+
+
