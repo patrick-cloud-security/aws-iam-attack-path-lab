@@ -1,4 +1,4 @@
-$ AWS IAM Attack Path Lab
+# AWS IAM Attack Path Lab
 
 ## Overview
 
