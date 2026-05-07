@@ -151,7 +151,26 @@ This lab was performed in an authorised personal AWS environment. No production 
 
 ## Architecture / Attack Flow
 
-![Attack Diagram](diagrams/vpc-attack-architecture.png)
+## Architecture / Attack Flow
+
+```mermaid
+flowchart LR
+    A[IAM User<br/>dev-user] -->|ssm:SendCommand| B[SSM<br/>AWS Control Plane]
+    B -->|Command executed| C[EC2 Instance<br/>Private Subnet]
+    C -->|curl IMDSv2 token + role endpoint| D[IMDSv2<br/>169.254.169.254]
+    D -->|Temporary STS credentials| E[EC2 Role Credentials]
+    E -->|AWS API calls| F[S3 / IAM / EC2 APIs<br/>depending on permissions]
+```
+
+```mermaid
+flowchart LR
+    A[IAM User<br/>dev-user] -->|iam:PassRole| B[Privileged IAM Role]
+    A -->|ec2:RunInstances| C[New EC2 Instance]
+    B -->|attached via instance profile| C
+    C -->|query IMDSv2| D[Temporary credentials<br/>for privileged role]
+    D -->|AWS API access| E[Privilege escalation]
+```
+
 
 
 
