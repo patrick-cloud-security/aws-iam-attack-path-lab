@@ -149,7 +149,26 @@ Work in progress. This lab is being expanded into IAM guardrail design, Terrafor
 
 This lab was performed in an authorised personal AWS environment. No production systems, customer data, or third-party systems were used.
 
-## Architecture / Attack Flow
+## What I Tested
+
+In this lab I tested:
+
+- Whether the identity could authenticate with `sts:GetCallerIdentity`.
+- Whether S3 bucket discovery was possible.
+- Whether object-level access required separate permissions.
+- Whether EC2, IAM, and Secrets Manager enumeration were denied.
+- How dangerous combinations such as `iam:PassRole` + `ec2:RunInstances` can create escalation paths.
+
+## Observed Results
+
+- `aws sts get-caller-identity` confirmed the active AWS identity.
+- `aws s3 ls` succeeded when `s3:ListAllMyBuckets` was allowed.
+- Listing objects inside a bucket failed without `s3:ListBucket`.
+- `iam:ListRoles` and `ec2:DescribeInstances` were denied when not explicitly allowed.
+
+## Reflection
+
+The key lesson for me was that valid credentials are not the same as broad access. Authentication only proves the identity is real; authorization determines the blast radius. This changed how I think about AWS roles: every workload identity should be treated as a potential future compromised identity.
 
 ## Architecture / Attack Flow
 
